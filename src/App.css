@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -19,4 +19,46 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.song {
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+  padding: 1em;
+  text-align: left;
+}
+
+.song-number {
+  width: 5%;
+}
+
+.song-name {
+  width: 90%;
+}
+
+.song-length {
+  width: 5%;
+}
+
+.album-cover-container {
+  width: 30%;
+  height: auto;
+  display: inline-block;
+  vertical-align: top;
+  /* position: fixed; */
+}
+
+.album-cover-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.album-info-songs-wrapper {
+  display: inline-block;
+  width: 70%;
+  vertical-align: top;
+}
+
+.album-info-songs-wrapper h3:first-child {
+  margin-top: 0;
 }
