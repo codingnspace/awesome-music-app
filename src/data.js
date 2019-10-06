@@ -4,7 +4,7 @@ export const artists = [
       name: "Beyonce",
       img: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/beyonce-1554742143.jpg?crop=0.502xw:1.00xh;0.270xw,0&resize=480:*",
       bio: '',
-      num_of_listeners: '',
+      num_of_listeners: '6.9M',
       albums: [
         {
           id: '0',

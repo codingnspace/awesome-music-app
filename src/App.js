@@ -1,7 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import { connect } from 'react-redux'
 import {artists} from './data'
 import {setArtists} from './actions'
+import ArtistList from './components/ArtistList'
+
+import ArtistDetailView from './components/Artist'
 
 import './App.css';
 
@@ -10,20 +14,6 @@ class App extends Component {
     this.props.setArtists(artists)
   }
   render() {
-    const artistList = artists
-    .sort((a,b) => {
-      const textA = a.name;
-      const textB = b.name;
-      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    })
-    .map(artist => {
-    return (
-      <div className="artist" style={{width: '188px', display: 'inline-block', height: '188px',}}>
-        <img alt={artist.name} src={artist.img} key={artist.id} style={{height: '100%', width: '100%', borderRadius: '50%'}} />
-        <p>{artist.name}</p>
-      </div>
-    )
-  })
 
   // console.log(artists[0])
   const song = artists[1].albums[0].songs[0]
@@ -38,7 +28,7 @@ class App extends Component {
   const songList = artists[1].albums[0].songs.map(song => {
     const songId = parseInt(song.id, 10)
     return (
-      <div className="song">
+      <div className="song" key={songId}>
         <div className="song-number" style={{display: 'inline-block'}}>{songId === 0 ? 1 : songId +1}</div>
         <div className="song-name" style={{display: 'inline-block'}}>{song.name}</div>
         <div className="song-length" style={{display: 'inline-block'}}>{song.length}</div>
@@ -65,19 +55,33 @@ class App extends Component {
     </div>
   )
   return (
-    <div className="App">
-      <h3>Artists</h3>
-      {artistList}
+    <Router>
+      <div className="App">
+        {/* <ArtistList artists={artists} /> */}
 
-      <h3>Song</h3>
-      {songUI}
+        {/* <h3>Song</h3>
+        {songUI}
 
-      <h3>Song List</h3>
-      {songList}
+        <h3>Song List</h3>
+        {songList}
 
-      <h3>Album UI</h3>
-      {albumUI}
-    </div>
+        <h3>Album UI</h3>
+        {albumUI} */}
+
+        <Switch>
+          {/* <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route> */}
+          <Route exact path="/">
+            <ArtistList artists={artists} />
+          </Route>
+          <Route path="/artist/:name" render={(props) => <ArtistDetailView  {...props} />} />
+        </Switch>
+      </div>
+    </Router>
   );
   }
 }
