@@ -20,8 +20,7 @@ const ArtistList = ({artists}) => {
         })
 
   return (
-      <div className="ArtistList">
-        <h3>Artists</h3>
+      <div className="artistList">
         {artistList}
       </div>
   );

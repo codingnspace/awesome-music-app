@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { Link } from "react-router-dom"
 
+import { getArtistTopAlbums, getArtistTopSongs, getArtist } from '../selectors'
 import '../App.css';
 
 export const MiniArtistView = ({artist}) => {
     return (
         <div className="mini-artist">
-            <img alt={artist.name} src={artist.img} key={artist.id} style={{height: '100%', width: '100%', borderRadius: '50%'}} />
+            <img alt={artist.name} src={artist.img} key={artist.id} />
             <p>{artist.name}</p>
         </div>
     )
@@ -29,7 +30,7 @@ class ArtistDetailView extends Component {
         const topSongsUI = topSongs.map(topSong => {
             return (
                 <div className="song" key={topSong.id}>
-                  <div class="song-info">
+                  <div className="song-info">
                     <h4 className="song-name">{topSong.name}</h4>
                     <h5>{topSong.albumName}</h5>
                   </div>
@@ -38,10 +39,12 @@ class ArtistDetailView extends Component {
             )
         })
 
-        console.log(topSongs, 'TOP SONGS')
 
         return (
             <div>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <img alt={artist.name} src={artist.img} key={artist.id} style={{width: '20%', borderRadius: '50%'}} />
+                </div>
                 <h3>{artist.name}</h3>
                 <p>{`${artist.num_of_listeners} Listeners`}</p>
                 <section className="top-songs">
@@ -68,39 +71,12 @@ class ArtistDetailView extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    const { artists } = state.data
-
-    const artist = artists.find(artist => artist.name === ownProps.match.params.name)
-    const albums = artist.albums
-    const topAlbums = albums
-        .sort((a,b) => {
-            const streamingRankA = parseInt(a.num_of_streams, 10)
-            const streamingRankB = parseInt(b.num_of_streams, 10)
-            return (streamingRankA < streamingRankB) ? -1 : (streamingRankA > streamingRankB) ? 1 : 0
-        })
-        .slice(0,3)
-    
-    const songs = artist.albums.reduce((accum, cur) => {
-        cur.songs.forEach(song => {
-            song.albumName = cur.name
-            song.albumCover = cur.cover
-        })
-        return accum.concat(cur.songs)
-    }, [])
-
-    const topSongs = songs
-        .sort((a,b) => {
-            const streamingRankA = parseInt(a.num_of_streams, 10)
-            const streamingRankB = parseInt(b.num_of_streams, 10)
-
-            return (streamingRankA < streamingRankB) ? -1 : (streamingRankA > streamingRankB) ? 1 : 0
-        })
-        .slice(0,3)
+    const artistName = ownProps.match.params.name
 
     return { 
-        artist,
-        topAlbums,
-        topSongs
+        artist: getArtist(state)(artistName),
+        topAlbums: getArtistTopAlbums(state)(artistName),
+        topSongs: getArtistTopSongs(state)(artistName)
     }
 }
 
