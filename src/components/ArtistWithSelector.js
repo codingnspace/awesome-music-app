@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from "react-router-dom"
 
 import { getArtistTopAlbums, getArtistTopSongs, getArtist } from '../selectors'
+
+import { SongList } from './Songs'
 import '../App.css';
 
 export const MiniArtistView = ({artist}) => {
@@ -17,43 +19,29 @@ export const MiniArtistView = ({artist}) => {
 class ArtistDetailView extends Component {
     
     render() {
-        console.log(this.props, 'this.props')
         const { artist, topAlbums, topSongs } = this.props
         const topAlbumsUI = topAlbums.map(topAlbum => (
-            <article style={{width: '30%'}}>
+            <article style={{width: '30%'}} key={topAlbum.id+topAlbum.name}>
                 <picture>
                     <img src={topAlbum.cover} alt={topAlbum.name} style={{width: '100%', display: 'inline-block'}} />
                 </picture>
             </article>
         ))
 
-        const topSongsUI = topSongs.map(topSong => {
-            return (
-                <div className="song" key={topSong.id}>
-                  <div className="song-info">
-                    <h4 className="song-name">{topSong.name}</h4>
-                    <h5>{topSong.albumName}</h5>
-                  </div>
-                  <div className="song-length">{topSong.length}</div>
-                </div>
-            )
-        })
-
-
         return (
             <div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <img alt={artist.name} src={artist.img} key={artist.id} style={{width: '20%', borderRadius: '50%'}} />
                 </div>
-                <h3>{artist.name}</h3>
-                <p>{`${artist.num_of_listeners} Listeners`}</p>
+                <h3 style={{textAlign: 'center',marginBottom: 0}}>{artist.name}</h3>
+                <p style={{textAlign: 'center',marginTop: '8px'}}>{`${artist.num_of_listeners} Listeners`}</p>
                 <section className="top-songs">
-                    <h4>Top Songs</h4>
+                    <h4 style={{marginBottom: '0'}}>Top Songs</h4>
                     <Link to={`/songs/${artist.name}`}>
-                        <h5>See All Songs</h5>
+                        <h5 style={{marginTop: '8px'}}>See All Songs</h5>
                     </Link>
                     <div>
-                        {topSongsUI}
+                        <SongList songs={topSongs} artist={artist} match={this.props.match} />
                     </div>
                 </section>
                 <section className="top-albums">
@@ -72,7 +60,6 @@ class ArtistDetailView extends Component {
 
 function mapStateToProps(state, ownProps) {
     const artistName = ownProps.match.params.name
-
     return { 
         artist: getArtist(state)(artistName),
         topAlbums: getArtistTopAlbums(state)(artistName),

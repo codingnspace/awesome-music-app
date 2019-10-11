@@ -1,3 +1,5 @@
+
+// selectors.js
 export const getArtists = state => state.data.artists
 
 export const getArtist = state => artistName => getArtists(state).find(artist => artist.name === artistName)

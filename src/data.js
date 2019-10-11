@@ -19,7 +19,7 @@ export const artists = [
               id: '0',
               name: 'Crazy in Love',
               length: '3:57',
-              num_of_streams: '0'
+              num_of_streams: '1'
             },
             {
               id: '1',
@@ -31,7 +31,7 @@ export const artists = [
               id: '2',
               name: 'Baby Boy',
               length: '4:05',
-              num_of_streams: '0'
+              num_of_streams: '2'
             },
             {
               id: '3',
@@ -244,7 +244,7 @@ export const artists = [
               id: '6',
               name: 'Single Ladies (Put A Ring On It)',
               length: '3:49',
-              num_of_streams: '1'
+              num_of_streams: '0'
             },
             {
               id: '7',
@@ -490,7 +490,7 @@ export const artists = [
               id: '3',
               name: 'Sorry',
               length: '3:32',
-              num_of_streams: '1'
+              num_of_streams: '0'
             },
             {
               id: '4',

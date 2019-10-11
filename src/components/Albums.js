@@ -10,7 +10,7 @@ class Albums extends Component {
     render() {
         const { artist, albums } = this.props
         const albumsUI = albums.map(album => (
-            <article style={{width: '30%'}}>
+            <article style={{width: '30%', marginBottom: '40px'}}>
                 <picture>
                     <img src={album.cover} alt={album.name} style={{width: '100%', display: 'inline-block'}} />
                 </picture>
@@ -19,13 +19,11 @@ class Albums extends Component {
 
         return (
             <div>
-                <h3>{artist.name}</h3>
-                <p>{`${artist.num_of_listeners} Listeners`}</p>
-                <Link to={`/artist/${artist.name}`}>
-                    <h5>See All Albums</h5>
+                <h3 style={{marginBottom: '0', textAlign: 'center'}}>{`All Albums by ${artist.name}`}</h3>
+                <Link style={{textAlign: 'center'}} to={`/artist/${artist.name}`}>
+                    <h5>{`See more ${artist.name}`}</h5>
                 </Link>
                 <section className="albums">
-                    <h4>Top Albums</h4>
                     <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
                         {albumsUI}
                     </div>

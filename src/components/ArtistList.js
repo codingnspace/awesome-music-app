@@ -13,7 +13,7 @@ const ArtistList = ({artists}) => {
         })
         .map(artist => {
             return (
-                <Link to={`/artist/${artist.name}`} key={artist.id} >
+                <Link to={`/albums/${artist.name}`} key={artist.id} >
                     <MiniArtistView artist={artist} />
                 </Link>
             )

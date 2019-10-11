@@ -6,41 +6,47 @@ import { getSearchTerm, getArtist, getArtistFilteredSongs } from '../selectors'
 import { setSearchFilter } from '../actions'
 import '../App.css';
 
-function SongList({songs}) {
+export function Song({song, artist}) {
+    return (
+        <div className="song" key={song.id}>
+           <div className="song-info">
+             <img src={song.albumCover} alt={artist.name} style={{width: '70px', display: 'inline-block', verticalAlign: 'top'}} />
+             <div style={{display: 'inline-block', verticalAlign: 'top', marginLeft: '15px'}}>
+                 <h4 className="song-name">{song.name}</h4>
+                 <h5>{song.albumName}</h5>
+             </div>
+           </div>
+           <div className="song-length">{song.length}</div>
+         </div>
+    )
+}
+
+export function SongList({songs, artist}) {
     return songs.map(song => (
-        <div className="song" key={song.id+song.name}>
-            <div class="song-info">
-                <h4 className="song-name">{song.name}</h4>
-                <h5>{song.albumName}</h5>
-            </div>
-            <div className="song-length">{song.length}</div>
-        </div>
+        <Song song={song} key={song.id+song.name} artist={artist}  />
     ))
 }
+
 class Songs extends Component {
     handleChange = (e) => {
         this.props.setSearchFilter(e.target.value)
-        // this.props.onChange(e.target.value)
     }
       
     render() {
         const { artist, songs } = this.props
-        console.log('COMPONENT RE_RENDERED')
-        console.log(this.props, 'SONGD')
 
         return (
-            <div>
-                <h3>{artist.name}</h3>
-                <p>{`${artist.num_of_listeners} Listeners`}</p>
+            <div style={{textAlign: 'center'}}>
+                <h3 style={{marginBottom: '0'}}>{`See All of ${artist.name}'s  Songs`}</h3>
                 <Link to={`/artist/${artist.name}`}>
-                    <h5>{`See More ${artist.name}`}</h5>
+                    <h5 style={{marginTop: '8px'}}>{`See More ${artist.name}`}</h5>
                 </Link>
-                <section className="albums">
-                    <h4>All Songs</h4>
-                    <input type="text" id="filter" 
+                <section className="all-songs">
+                    <input type="text" id="filter"
+                        placeHolder="Search songs..." 
                         onChange={this.handleChange}/>
                     <div>
-                        <SongList songs={songs} />
+                        <SongList songs={songs} artist={artist} />
                     </div>
                 </section>
             </div>
